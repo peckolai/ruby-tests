@@ -5,11 +5,7 @@ class Search
     arr = sentence.downcase.split
 
     index = arr.index word
-    if index == nil
-      print ("I can't find '#{word}'")
-    else
-      print ("I found '#{word}' at position #{index + 1}")
-    end
+    print index.nil? ? ("I can't find '#{word}'") : ("I found '#{word}' at position #{index + 1}")
   end
 end
 

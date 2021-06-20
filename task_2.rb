@@ -1,5 +1,5 @@
 def type_of(element)
-  if (element.class == Hash) && !element.empty?
+  if (element.is_a? Hash) && !element.empty?
     d = {}
     element.each_pair do |key, val|
       d[type_of(key)] = type_of(val)
@@ -12,11 +12,16 @@ def type_of(element)
   end
 end
 
-p type_of([["hi"], {'key'=>'value', key: 'value'}, :sym, [1, true], nil])
 describe 'type_of' do
   it 'should return the class of each element in a nested structure' do
     
-    expect(type_of([["hi"], {'key'=>'value', :key=>'value'}, :sym, [1, true], nil]))
-      .to eq([[String], {String=>String, Symbol=>String}, Symbol, [Integer, TrueClass], NilClass])
+    expect(type_of([["hi"], {'key'=> { 'key'=>'value', :key=>'value'}}, :sym, [1, true], nil]))
+      .to eq([[String], {String=>{String=>String, Symbol=>String}}, Symbol, [Integer, TrueClass], NilClass])
+  end
+
+  it 'should return the class of each element in a nested structure' do
+    
+    expect(type_of([["hi"], {}, :sym, [1, true], nil]))
+      .to eq([[String], Hash, Symbol, [Integer, TrueClass], NilClass])
   end
 end
